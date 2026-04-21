@@ -26,6 +26,15 @@ Todas las secciones a partir de *Entorno construido* cuentan con **toggles de co
 
 ---
 
+# 🚀 Prototipo
+ 
+Como caso piloto, se tomó **Ecuador** para desarrollar y validar el nuevo formato de perfil. El prototipo incluye todas las secciones propuestas e integra los datos reales del país disponibles en las fuentes oficiales.
+ 
+Puedes acceder al prototipo en:
+**[https://andresabarca-atlas.github.io/BID-Perfiles-de-Riesgo/Prototipo](https://andresabarca-atlas.github.io/BID-Perfiles-de-Riesgo/Prototipo)**
+ 
+---
+
 # 📁 Estructura del repositorio
 
 ```
