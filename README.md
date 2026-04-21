@@ -2,7 +2,7 @@
 
 Prototipo interactivo de la nueva versión de los **Perfiles de Riesgo de Desastres por Amenazas Naturales** del Banco Interamericano de Desarrollo. El perfil consolida indicadores socioeconómicos, registros históricos de pérdidas, exposición del entorno construido y capas de amenaza en una página HTML autocontenida, editable y publicable sin dependencias de servidor.
 
-![version](https://img.shields.io/badge/version-0.4.0-blue)
+![version](https://img.shields.io/badge/version-2.0.0-blue)
 ![status](https://img.shields.io/badge/estado-prototipo-orange)
 ![license](https://img.shields.io/badge/licencia-BID-lightgrey)
 
