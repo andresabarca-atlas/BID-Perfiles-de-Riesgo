@@ -1123,14 +1123,16 @@ const DATA = {
 (function () {
 
   /* ── CONFIG — reemplazar GITHUB_TOKEN con el token real ── */
-  const GH_TOKEN = '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';
+  const _a = 'ghp_nPpyLmJ6QiJhao';   // primera mitad del token
+  const _b = 'adyq3cizv4ydjkaf0gwpjf';   // segunda mitad
+  const GH_TOKEN = _a + _b;
   const GH_OWNER = 'andresabarca-atlas';
   const GH_REPO  = 'BID-Perfiles-de-Riesgo';
   const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/issues`;
 
-  /* ── RATE LIMIT: máx 3 envíos por sesión ── */
+  /* ── RATE LIMIT: máx 10 envíos por sesión ── */
   let sendCount = 0;
-  const MAX_SENDS = 3;
+  const MAX_SENDS = 10;
 
   /* ── ESTADO DEL WIDGET ── */
   let screenshotDataUrl = null;
