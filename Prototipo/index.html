@@ -257,6 +257,79 @@
       opacity: 0;
     }
 
+    /* ─── FEEDBACK WIDGET ────────────────────────────────── */
+    #fb-btn {
+      position: fixed; bottom: 28px; right: 28px; z-index: 1000;
+      background: var(--blue-primary); color: #fff;
+      border: none; border-radius: 28px; cursor: pointer;
+      padding: 11px 20px; font-size: 13px; font-weight: 700;
+      font-family: inherit;
+      display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 16px rgba(0,78,112,0.35);
+      transition: background 0.15s, transform 0.15s;
+    }
+    #fb-btn:hover { background: var(--blue-accent); transform: translateY(-1px); }
+    #fb-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1001;
+      background: rgba(0,20,40,0.55); backdrop-filter: blur(2px);
+      align-items: center; justify-content: center;
+    }
+    #fb-overlay.open { display: flex; }
+    #fb-panel {
+      background: #fff; border-radius: 12px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.22);
+      width: 700px; max-width: 96vw; max-height: 92vh;
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    #fb-header {
+      background: var(--blue-primary); color: #fff;
+      padding: 14px 20px; display: flex; justify-content: space-between; align-items: center;
+    }
+    #fb-header h3 { font-size: 15px; font-weight: 700; margin: 0; }
+    #fb-close {
+      background: none; border: none; color: #fff; cursor: pointer;
+      font-size: 20px; line-height: 1; padding: 0 2px;
+    }
+    #fb-body { padding: 18px 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+    .fb-label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    #fb-screenshot-wrap {
+      position: relative; border: 1.5px solid var(--gray-border); border-radius: 6px; overflow: hidden;
+    }
+    #fb-screenshot-img { display: block; width: 100%; height: auto; max-height: 260px; object-fit: contain; background: #f4f7fb; }
+    #fb-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair;
+    }
+    #fb-tools { display: flex; gap: 8px; align-items: center; margin-bottom: 4px; flex-wrap: wrap; }
+    .fb-tool-btn {
+      border: 1.5px solid var(--gray-border); background: #fff; border-radius: 6px;
+      padding: 5px 10px; font-size: 12px; cursor: pointer; font-family: inherit;
+      color: var(--text-secondary); transition: border-color 0.15s, background 0.15s;
+    }
+    .fb-tool-btn.active, .fb-tool-btn:hover { border-color: var(--blue-primary); background: var(--blue-light); color: var(--blue-primary); }
+    .fb-color { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #fff; cursor: pointer; outline: 2px solid transparent; transition: outline 0.1s; flex-shrink: 0; }
+    .fb-color.active { outline: 2px solid var(--blue-primary); }
+    #fb-comment {
+      width: 100%; border: 1.5px solid var(--gray-border); border-radius: 6px;
+      padding: 10px 12px; font-size: 14px; font-family: inherit; resize: vertical;
+      min-height: 72px; outline: none; transition: border-color 0.15s; box-sizing: border-box;
+    }
+    #fb-comment:focus { border-color: var(--blue-accent); }
+    #fb-footer { padding: 14px 20px; border-top: 1px solid var(--gray-border); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    #fb-status { font-size: 13px; color: var(--text-muted); flex: 1; min-width: 120px; }
+    #fb-submit {
+      background: var(--blue-primary); color: #fff; border: none;
+      border-radius: 6px; padding: 10px 22px; font-size: 14px; font-weight: 700;
+      font-family: inherit; cursor: pointer; transition: background 0.15s;
+    }
+    #fb-submit:hover:not(:disabled) { background: var(--blue-accent); }
+    #fb-submit:disabled { background: var(--text-muted); cursor: not-allowed; }
+    #fb-capture-btn {
+      background: var(--blue-light); color: var(--blue-primary); border: 1.5px solid var(--gray-border);
+      border-radius: 6px; padding: 8px 14px; font-size: 13px; font-weight: 600;
+      font-family: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+    }
+    #fb-capture-btn:hover { border-color: var(--blue-primary); }
+
     @media (max-width: 760px) {
       .intro-row { grid-template-columns: 1fr; }
       .indicators-grid { grid-template-columns: repeat(2, 1fr); }
@@ -428,9 +501,6 @@ const DATA = {
       </div>
     </div>
     <div class="header-country-links">
-      <a class="feedback-link" href="https://forms.gle/Aangkt7HpeqLq9K97" target="_blank" rel="noopener">
-        ✦ Dejar feedback del prototipo
-      </a>
       <a class="github-link" href="https://github.com/andresabarca-atlas/BID-Perfiles-de-Riesgo" target="_blank" rel="noopener">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
         Repositorio GitHub
@@ -977,5 +1047,293 @@ const DATA = {
 
 })();
 </script>
+<!-- ─── FEEDBACK WIDGET ──────────────────────────────────────── -->
+<button id="fb-btn" aria-label="Enviar feedback">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  Feedback
+</button>
+
+<div id="fb-overlay" role="dialog" aria-modal="true" aria-label="Panel de feedback">
+  <div id="fb-panel">
+    <div id="fb-header">
+      <h3>📝 Enviar feedback sobre el prototipo</h3>
+      <button id="fb-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div id="fb-body">
+
+      <!-- Screenshot -->
+      <div>
+        <div class="fb-label">1. Captura de pantalla</div>
+        <button id="fb-capture-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Capturar pantalla actual
+        </button>
+        <div id="fb-screenshot-wrap" style="margin-top:10px; display:none;">
+          <img id="fb-screenshot-img" alt="Captura de pantalla" />
+          <canvas id="fb-canvas"></canvas>
+        </div>
+        <div id="fb-no-screenshot" style="font-size:13px; color:var(--text-muted); margin-top:6px;">
+          Haz clic en "Capturar pantalla actual" para incluir una imagen con tu feedback.
+        </div>
+      </div>
+
+      <!-- Annotation tools (hidden until screenshot) -->
+      <div id="fb-annotation-section" style="display:none;">
+        <div class="fb-label">2. Anotaciones (opcional)</div>
+        <div id="fb-tools">
+          <button class="fb-tool-btn active" data-tool="pen">✏️ Dibujar</button>
+          <button class="fb-tool-btn" data-tool="rect">▭ Recuadro</button>
+          <button class="fb-tool-btn" data-tool="arrow">↗ Flecha</button>
+          <button class="fb-tool-btn" data-tool="erase">🧹 Borrar todo</button>
+          <div style="width:1px; height:20px; background:var(--gray-border); margin: 0 2px;"></div>
+          <div class="fb-color active" data-color="#E87B22" style="background:#E87B22;" title="Naranja"></div>
+          <div class="fb-color" data-color="#C8373A" style="background:#C8373A;" title="Rojo"></div>
+          <div class="fb-color" data-color="#004E70" style="background:#004E70;" title="Azul"></div>
+          <div class="fb-color" data-color="#007A50" style="background:#007A50;" title="Verde"></div>
+        </div>
+      </div>
+
+      <!-- Comment -->
+      <div>
+        <div class="fb-label" id="fb-comment-label">3. Comentario</div>
+        <textarea id="fb-comment" placeholder="Describe tu comentario, sugerencia o error encontrado…"></textarea>
+      </div>
+
+    </div>
+    <div id="fb-footer">
+      <div id="fb-status"></div>
+      <button id="fb-submit">Enviar feedback →</button>
+    </div>
+  </div>
+</div>
+
+<!-- html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+(function () {
+
+  /* ── CONFIG — reemplazar GITHUB_TOKEN con el token real ── */
+  const GH_TOKEN = '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';
+  const GH_OWNER = 'andresabarca-atlas';
+  const GH_REPO  = 'BID-Perfiles-de-Riesgo';
+  const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/issues`;
+
+  /* ── RATE LIMIT: máx 3 envíos por sesión ── */
+  let sendCount = 0;
+  const MAX_SENDS = 3;
+
+  /* ── ESTADO DEL WIDGET ── */
+  let screenshotDataUrl = null;
+  let currentTool   = 'pen';
+  let currentColor  = '#E87B22';
+  let isDrawing     = false;
+  let startX, startY;
+  let snapshot; // para recuadros y flechas
+
+  /* ── ELEMENTOS ── */
+  const btn       = document.getElementById('fb-btn');
+  const overlay   = document.getElementById('fb-overlay');
+  const closeBtn  = document.getElementById('fb-close');
+  const captureBtn= document.getElementById('fb-capture-btn');
+  const wrap      = document.getElementById('fb-screenshot-wrap');
+  const img       = document.getElementById('fb-screenshot-img');
+  const canvas    = document.getElementById('fb-canvas');
+  const ctx       = canvas.getContext('2d');
+  const annotSec  = document.getElementById('fb-annotation-section');
+  const noShot    = document.getElementById('fb-no-screenshot');
+  const comment   = document.getElementById('fb-comment');
+  const submitBtn = document.getElementById('fb-submit');
+  const status    = document.getElementById('fb-status');
+  const commentLabel = document.getElementById('fb-comment-label');
+
+  /* ── OPEN / CLOSE ── */
+  btn.addEventListener('click', () => { overlay.classList.add('open'); });
+  closeBtn.addEventListener('click', closeWidget);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeWidget(); });
+
+  function closeWidget() {
+    overlay.classList.remove('open');
+    status.textContent = '';
+  }
+
+  /* ── CAPTURE ── */
+  captureBtn.addEventListener('click', async () => {
+    overlay.classList.remove('open');
+    status.textContent = '';
+    await new Promise(r => setTimeout(r, 120)); // let overlay hide
+    try {
+      const c = await html2canvas(document.body, { scale: 0.6, useCORS: true, logging: false });
+      screenshotDataUrl = c.toDataURL('image/jpeg', 0.82);
+      img.src = screenshotDataUrl;
+      wrap.style.display = 'block';
+      noShot.style.display = 'none';
+      annotSec.style.display = 'block';
+      commentLabel.textContent = '3. Comentario';
+      // Sync canvas size to rendered image
+      img.onload = () => {
+        canvas.width  = img.offsetWidth  || img.naturalWidth;
+        canvas.height = img.offsetHeight || img.naturalHeight;
+      };
+      if (img.complete) {
+        canvas.width  = img.offsetWidth  || img.naturalWidth;
+        canvas.height = img.offsetHeight || img.naturalHeight;
+      }
+    } catch(e) {
+      console.error(e);
+    }
+    overlay.classList.add('open');
+  });
+
+  /* ── TOOLS ── */
+  document.querySelectorAll('.fb-tool-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      const tool = b.dataset.tool;
+      if (tool === 'erase') { ctx.clearRect(0, 0, canvas.width, canvas.height); return; }
+      currentTool = tool;
+      document.querySelectorAll('.fb-tool-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('.fb-color').forEach(dot => {
+    dot.addEventListener('click', () => {
+      currentColor = dot.dataset.color;
+      document.querySelectorAll('.fb-color').forEach(x => x.classList.remove('active'));
+      dot.classList.add('active');
+    });
+  });
+
+  /* ── DRAW ── */
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    const scaleX = canvas.width  / r.width;
+    const scaleY = canvas.height / r.height;
+    const src = e.touches ? e.touches[0] : e;
+    return { x: (src.clientX - r.left) * scaleX, y: (src.clientY - r.top) * scaleY };
+  }
+
+  canvas.addEventListener('mousedown',  startDraw);
+  canvas.addEventListener('mousemove',  draw);
+  canvas.addEventListener('mouseup',    endDraw);
+  canvas.addEventListener('mouseleave', endDraw);
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); startDraw(e); }, { passive: false });
+  canvas.addEventListener('touchmove',  e => { e.preventDefault(); draw(e); },      { passive: false });
+  canvas.addEventListener('touchend',   endDraw);
+
+  function startDraw(e) {
+    isDrawing = true;
+    const p = getPos(e);
+    startX = p.x; startY = p.y;
+    if (currentTool === 'pen') {
+      ctx.beginPath(); ctx.moveTo(startX, startY);
+    } else {
+      snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  function draw(e) {
+    if (!isDrawing) return;
+    const p = getPos(e);
+    ctx.strokeStyle = currentColor;
+    ctx.lineWidth   = 2.5;
+    ctx.lineCap     = 'round';
+    if (currentTool === 'pen') {
+      ctx.lineTo(p.x, p.y); ctx.stroke();
+    } else {
+      ctx.putImageData(snapshot, 0, 0);
+      if (currentTool === 'rect') {
+        ctx.strokeRect(startX, startY, p.x - startX, p.y - startY);
+      } else if (currentTool === 'arrow') {
+        drawArrow(startX, startY, p.x, p.y);
+      }
+    }
+  }
+
+  function endDraw() { isDrawing = false; }
+
+  function drawArrow(x1, y1, x2, y2) {
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const headLen = 14;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
+    ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI/6), y2 - headLen * Math.sin(angle - Math.PI/6));
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI/6), y2 - headLen * Math.sin(angle + Math.PI/6));
+    ctx.stroke();
+  }
+
+  /* ── SUBMIT ── */
+  submitBtn.addEventListener('click', async () => {
+    const text = comment.value.trim();
+    if (!text && !screenshotDataUrl) {
+      status.textContent = '⚠️ Agrega un comentario o una captura antes de enviar.';
+      return;
+    }
+    if (sendCount >= MAX_SENDS) {
+      status.textContent = '⚠️ Límite de envíos por sesión alcanzado (3).';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    status.textContent = 'Enviando…';
+
+    // Merge screenshot + canvas annotations
+    let finalImage = null;
+    if (screenshotDataUrl) {
+      const merged = document.createElement('canvas');
+      merged.width  = canvas.width  || img.naturalWidth;
+      merged.height = canvas.height || img.naturalHeight;
+      const mctx = merged.getContext('2d');
+      const base = new Image();
+      base.src = screenshotDataUrl;
+      await new Promise(r => { base.onload = r; });
+      mctx.drawImage(base, 0, 0, merged.width, merged.height);
+      mctx.drawImage(canvas, 0, 0);
+      finalImage = merged.toDataURL('image/jpeg', 0.82);
+    }
+
+    const now   = new Date().toLocaleString('es-CR', { timeZone: 'America/Costa_Rica' });
+    const url   = window.location.href;
+    const body  = [
+      text ? `**Comentario:**\n${text}` : '',
+      finalImage ? `**Captura de pantalla:**\n![screenshot](${finalImage})` : '',
+      `\n---\n🔗 **URL:** ${url}\n🕐 **Fecha:** ${now}`
+    ].filter(Boolean).join('\n\n');
+
+    try {
+      const res = await fetch(GH_API, {
+        method: 'POST',
+        headers: {
+          'Authorization': `token ${GH_TOKEN}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github+json'
+        },
+        body: JSON.stringify({
+          title: `[Feedback] Perfil Ecuador — ${now}`,
+          body,
+          labels: ['feedback', 'prototipo']
+        })
+      });
+      if (res.ok) {
+        const issue = await res.json();
+        sendCount++;
+        status.innerHTML = `✅ Feedback enviado. <a href="${issue.html_url}" target="_blank" rel="noopener" style="color:var(--blue-accent);">Ver issue #${issue.number}</a>`;
+        comment.value = '';
+        submitBtn.disabled = false;
+      } else {
+        const err = await res.json();
+        status.textContent = `❌ Error: ${err.message}`;
+        submitBtn.disabled = false;
+      }
+    } catch(e) {
+      status.textContent = '❌ Error de conexión. Intenta de nuevo.';
+      submitBtn.disabled = false;
+    }
+  });
+
+})();
+</script>
+
 </body>
 </html>
