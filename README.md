@@ -77,7 +77,24 @@ const DATA = {
   referencias:  [ { texto, url, subitems? }, ... ]
 };
 ```
+ 
+---
 
+# 💬 Sistema de feedback
+ 
+El prototipo incluye un widget de feedback integrado (botón flotante en la esquina inferior derecha) que permite al equipo revisor enviar comentarios visuales directamente desde la página.
+ 
+### Funcionalidades
+- Captura automática de la pantalla visible al momento de enviar el feedback
+- Herramientas de anotación sobre el screenshot: dibujo libre, recuadros y flechas
+- Campo de texto para descripción del comentario
+- Registro del nombre del revisor
+- Envío directo como **GitHub Issue** al repositorio, incluyendo screenshot, comentario, nombre, URL y fecha
+
+### Ver el feedback recibido
+Los issues enviados por el equipo están disponibles en:
+**[github.com/andresabarca-atlas/BID-Perfiles-de-Riesgo/issues](https://github.com/andresabarca-atlas/BID-Perfiles-de-Riesgo/issues)**
+ 
 ---
 
 # 🛠️ Tecnologías utilizadas
