@@ -1099,6 +1099,15 @@ const DATA = {
         <textarea id="fb-comment" placeholder="Describe tu comentario, sugerencia o error encontrado…"></textarea>
       </div>
 
+      <!-- Name -->
+      <div>
+        <div class="fb-label">4. Tu nombre</div>
+        <input id="fb-name" type="text" placeholder="Nombre y apellido"
+          style="width:100%; border:1.5px solid var(--gray-border); border-radius:6px;
+                 padding:9px 12px; font-size:14px; font-family:inherit; outline:none;
+                 transition:border-color 0.15s; box-sizing:border-box;">
+      </div>
+
     </div>
     <div id="fb-footer">
       <div id="fb-status"></div>
@@ -1143,6 +1152,7 @@ const DATA = {
   const annotSec  = document.getElementById('fb-annotation-section');
   const noShot    = document.getElementById('fb-no-screenshot');
   const comment   = document.getElementById('fb-comment');
+  const nameInput = document.getElementById('fb-name');
   const submitBtn = document.getElementById('fb-submit');
   const status    = document.getElementById('fb-status');
   const commentLabel = document.getElementById('fb-comment-label');
@@ -1163,7 +1173,17 @@ const DATA = {
     status.textContent = '';
     await new Promise(r => setTimeout(r, 120)); // let overlay hide
     try {
-      const c = await html2canvas(document.body, { scale: 0.6, useCORS: true, logging: false });
+      const c = await html2canvas(document.body, {
+        scale: 1,
+        useCORS: true,
+        logging: false,
+        x: window.scrollX,
+        y: window.scrollY,
+        width: window.innerWidth,
+        height: window.innerHeight,
+        windowWidth: window.innerWidth,
+        windowHeight: window.innerHeight
+      });
       screenshotDataUrl = c.toDataURL('image/jpeg', 0.82);
       img.src = screenshotDataUrl;
       wrap.style.display = 'block';
@@ -1266,6 +1286,7 @@ const DATA = {
   /* ── SUBMIT ── */
   submitBtn.addEventListener('click', async () => {
     const text = comment.value.trim();
+    const name = nameInput.value.trim() || 'Anónimo';
     if (!text && !screenshotDataUrl) {
       status.textContent = '⚠️ Agrega un comentario o una captura antes de enviar.';
       return;
@@ -1296,6 +1317,7 @@ const DATA = {
     const now   = new Date().toLocaleString('es-CR', { timeZone: 'America/Costa_Rica' });
     const url   = window.location.href;
     const body  = [
+      `**Enviado por:** ${name}`,
       text ? `**Comentario:**\n${text}` : '',
       finalImage ? `**Captura de pantalla:**\n![screenshot](${finalImage})` : '',
       `\n---\n🔗 **URL:** ${url}\n🕐 **Fecha:** ${now}`
@@ -1310,7 +1332,7 @@ const DATA = {
           'Accept': 'application/vnd.github+json'
         },
         body: JSON.stringify({
-          title: `[Feedback] Perfil Ecuador — ${now}`,
+          title: `[Feedback] ${name} — ${now}`,
           body,
           labels: ['feedback', 'prototipo']
         })
@@ -1320,6 +1342,7 @@ const DATA = {
         sendCount++;
         status.innerHTML = `✅ Feedback enviado. <a href="${issue.html_url}" target="_blank" rel="noopener" style="color:var(--blue-accent);">Ver issue #${issue.number}</a>`;
         comment.value = '';
+        nameInput.value = '';
         submitBtn.disabled = false;
       } else {
         const err = await res.json();
